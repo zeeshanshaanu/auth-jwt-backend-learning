@@ -1,21 +1,27 @@
 import express from 'express';
 const router = express.Router();
-import UserController from '../controllers/userController.js';
+import {
+    userRegistration,
+    userLogin,
+    sendUserPasswordResetEmail,
+    userPasswordReset,
+    changeUserPassword,
+    loggedUser
+} from '../controllers/userController.js';
 import checkUserAuth from '../middlewares/auth-middleware.js';
 
-// ROute Level Middleware - To Protect Route
-router.use('/changepassword', checkUserAuth)
-router.use('/loggeduser', checkUserAuth)
+// Route Level Middleware - To Protect Routes
+router.use('/changepassword', checkUserAuth);
+router.use('/loggeduser', checkUserAuth);
 
 // Public Routes
-router.post('/register', UserController.userRegistration)
-router.post('/login', UserController.userLogin)
-router.post('/send-reset-password-email', UserController.sendUserPasswordResetEmail)
-router.post('/reset-password/:id/:token', UserController.userPasswordReset)
+router.post('/register', userRegistration);
+router.post('/login', userLogin);
+router.post('/send-reset-password-email', sendUserPasswordResetEmail);
+router.post('/reset-password/:id/:token', userPasswordReset);
 
 // Protected Routes
-router.post('/changepassword', UserController.changeUserPassword)
-router.get('/loggeduser', UserController.loggedUser)
+router.post('/changepassword', changeUserPassword);
+router.get('/loggeduser', loggedUser);
 
-
-export default router
+export default router;
